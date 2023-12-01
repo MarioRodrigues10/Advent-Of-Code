@@ -1,4 +1,4 @@
-defmodule Day1_Part2 do
+defmodule Day1_Part2_V1 do
   def sum_values(input) do
     lines = String.split(input, ~r/\n/)
     values = lines |> Enum.map(&extract_value/1)
@@ -20,42 +20,32 @@ defmodule Day1_Part2 do
   end
 
   defp word_to_digit(word) do
-    if is_my_number(word) do
-      String.to_integer(word)
-    else
-      case String.downcase(word) do
-        "one" -> 1
-        "two" -> 2
-        "three" -> 3
-        "four" -> 4
-        "five" -> 5
-        "six" -> 6
-        "seven" -> 7
-        "eight" -> 8
-        "nine" -> 9
-        _ -> 10
-      end
-    end
-  end
+    digit_map = %{
+      "one" => 1,
+      "1" => 1,
+      "two" => 2,
+      "2" => 2,
+      "three" => 3,
+      "3" => 3,
+      "four" => 4,
+      "4" => 4,
+      "five" => 5,
+      "5" => 5,
+      "six" => 6,
+      "6" => 6,
+      "seven" => 7,
+      "7" => 7,
+      "eight" => 8,
+      "8" => 8,
+      "nine" => 9,
+      "9" => 9
+    }
 
-  def is_my_number(word) do
-    case String.downcase(word) do
-      "0" -> true
-      "1" -> true
-      "2" -> true
-      "3" -> true
-      "4" -> true
-      "5" -> true
-      "6" -> true
-      "7" -> true
-      "8" -> true
-      "9" -> true
-      _ -> false
-    end
+    digit_map[String.downcase(word)] || 10
   end
 
   def generate_substrings(line) do
-    cleaned_line = remove_special_characters(line)
+    cleaned_line = String.replace(line, ~r/[^a-zA-Z0-9\n]/, "")
 
     if cleaned_line =~ ~r/[^[:space:]]/ do
       Enum.flat_map(0..String.length(cleaned_line), fn start ->
@@ -68,9 +58,6 @@ defmodule Day1_Part2 do
     end
   end
 
-  defp remove_special_characters(line) do
-    String.replace(line, ~r/[^a-zA-Z0-9\n]/, "")
-  end
 end
 
 input = """
@@ -1076,5 +1063,5 @@ eight691seven8cxdbveightzv
 onenjhcd9
 """
 
-result = Day1_Part2.sum_values(input)
+result = Day1_Part2_V1.sum_values(input)
 IO.puts("Sum: #{result}")

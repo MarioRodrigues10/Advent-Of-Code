@@ -1,4 +1,4 @@
-defmodule Day1_Part1 do
+defmodule Day1_Part1_V1 do
   def sum_values_lines(input) do
     lines = String.split(input, ~r/\n/)
     values = lines |> Enum.map(&sum_values/1)
@@ -1031,5 +1031,5 @@ eight691seven8cxdbveightzv
 onenjhcd9
 """
 
-result = Day1_Part1.sum_values_lines(input)
+result = Day1_Part1_V1.sum_values_lines(input)
 IO.puts("Sum: #{result}")
