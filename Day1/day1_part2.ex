@@ -1,8 +1,8 @@
 defmodule Day1_Part2 do
   def sum_values(input) do
     lines = String.split(input, ~r/\n/)
-    calibration_values = lines |> Enum.map(&extract_value/1)
-    Enum.sum(calibration_values)
+    values = lines |> Enum.map(&extract_value/1)
+    Enum.sum(values)
   end
 
   defp extract_value(line) do
@@ -73,7 +73,6 @@ defmodule Day1_Part2 do
   end
 end
 
-# Example usage
 input = """
 tsgbzmgbonethreedrqzbhxjkvcnm3
 7qlpsnhbmnconeeight78

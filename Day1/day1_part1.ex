@@ -1,14 +1,13 @@
 defmodule Day1_Part1 do
   def sum_values_lines(input) do
     lines = String.split(input, ~r/\n/)
-    calibration_values = lines |> Enum.map(&sum_values/1)
-    Enum.sum(calibration_values)
+    values = lines |> Enum.map(&sum_values/1)
+    Enum.sum(values)
   end
 
   defp get_digits(str) do
     digits =
       str
-      # Remove non-digits
       |> String.replace(~r/\D/, "")
 
     if String.length(digits) == 1 do
@@ -29,7 +28,6 @@ defmodule Day1_Part1 do
   end
 end
 
-# Example usage
 input = """
 tsgbzmgbonethreedrqzbhxjkvcnm3
 7qlpsnhbmnconeeight78
