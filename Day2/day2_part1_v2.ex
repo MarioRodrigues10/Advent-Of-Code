@@ -1,10 +1,9 @@
-defmodule Day2_Part1 do
+defmodule Day2_Part1_V2 do
   def parse(input) do
     input
     |> String.split("\n", trim: true)
     |> Enum.map(&parse_game(&1))
     |> Enum.map(&sum_games/1)
-    |> Enum.reject(&(&1 == 0))
     |> Enum.sum()
   end
 
@@ -27,29 +26,27 @@ defmodule Day2_Part1 do
   defp parse_color(color_str, game_id) do
     [count_str, color] = String.trim(color_str) |> String.split(~r/\s+/, parts: 2)
     count = String.to_integer(count_str)
-    {game_id, count, String.to_atom(color)}
+    {game_id, count, String.to_existing_atom(color)}
   end
 
   def sum_games(games) do
-    game_id = elem(Enum.at(games, 0), 0)
+    game_id = hd(games) |> elem(0)
 
-    conditional =
-      Enum.reduce(games, 0, fn game, acc ->
-        count = elem(game, 1)
-        color = elem(game, 2)
+    cond do
+      Enum.reduce(games, 0, &sum_condition/2) == 0 -> game_id
+      true -> 0
+    end
+  end
 
-        case color do
-          :blue when count > 14 -> acc + 1
-          :red when count > 12 -> acc + 1
-          :green when count > 13 -> acc + 1
-          _ -> acc
-        end
-      end)
+  defp sum_condition(game, acc) do
+    count = elem(game, 1)
+    color = elem(game, 2)
 
-    if(conditional == 0) do
-      game_id
-    else
-      0
+    case {color, count} do
+      {:blue, c} when c > 14 -> acc + 1
+      {:red, c} when c > 12 -> acc + 1
+      {:green, c} when c > 13 -> acc + 1
+      _ -> acc
     end
   end
 end
@@ -157,5 +154,5 @@ Game 99: 14 red, 2 blue, 1 green; 3 green, 13 red, 9 blue; 9 red, 9 blue, 2 gree
 Game 100: 1 blue, 1 red, 1 green; 8 blue, 1 green; 1 green, 7 blue, 1 red; 1 green, 4 blue, 1 red; 1 green, 3 blue
 """
 
-result = Day2_Part1.parse(input)
+result = Day2_Part1_V2.parse(input)
 IO.puts("Sum: #{result}")
