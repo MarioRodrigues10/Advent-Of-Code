@@ -1,9 +1,8 @@
 defmodule Day4_Part2 do
   def part2(input) do
-    input = input |> String.split("\n", trim: true)
-
     cards1 =
       input
+      |> String.split("\n", trim: true)
       |> Enum.map(&parse_line/1)
       |> Enum.with_index(1)
 
