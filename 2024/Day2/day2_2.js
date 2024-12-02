@@ -20,9 +20,6 @@ function decreasing12(lists){
             value = anyFix(lists[i]);
             value? count++ : count;
         }
-        flag = 0;
-        flag_incr = 0;
-        flag_decr = 0;
     }
     return count;
 }
